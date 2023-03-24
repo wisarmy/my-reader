@@ -12,7 +12,7 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false,
+      "all": true,
       "shell": {
         "all": false,
         "open": true
@@ -22,6 +22,13 @@
         "scope": [
           "$APPDATA/*",
           "$APPDATA/books/*"
+        ]
+      },
+      "http": {
+        "all": true,
+        "request": false,
+        "scope": [
+          "http://**"
         ]
       }
     },
