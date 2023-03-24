@@ -1,4 +1,3 @@
-<script setup type="ts"></script>
 <template>
   <!-- 头部 -->
   <header
@@ -58,6 +57,7 @@
           </svg>
         </div>
       </div>
+      <!-- 上传 -->
       <div class="relative bg-gray-100 text-black">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -66,6 +66,7 @@
           stroke-width="1.5"
           stroke="currentColor"
           class="w-6 h-6 transition duration-300 ease-in-out hover:text-blue-500 hover:stroke-blue-500"
+          @click="handleFileSelect"
         >
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
         </svg>
@@ -99,3 +100,34 @@
     </div>
   </header>
 </template>
+
+<script setup lang="ts">
+import { writeBinaryFile, BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
+function handleFileSelect(): void {
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = ".pdf, .doc, .docx, .jpg, .jpeg, .png";
+  fileInput.addEventListener("change", () => {
+    const files = fileInput.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        handleFileUpload(event, file);
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  });
+  fileInput.click();
+}
+
+async function handleFileUpload(event: any, file: any) {
+  const fileContent = event.target?.result;
+
+  console.log(fileContent);
+  // await createDir("books", { dir: BaseDirectory.AppData });
+  await writeBinaryFile("books/" + file.name, new Uint8Array(fileContent), {
+    dir: BaseDirectory.AppData,
+  });
+}
+</script>
