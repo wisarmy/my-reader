@@ -41,9 +41,14 @@ function preview(path: string) {
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
       >
         <template v-for="book in books">
-          <div v-if="book.src" :key="book.path" @click="preview('books/' + book.name)">
-            <img :src="book.src" class="rounded-lg" />
-            <div class="text-gray-700 mt-2 text-center">{{ book.name }}</div>
+          <div
+            v-if="book.src"
+            :key="book.path"
+            @click="preview('books/' + book.name)"
+            class="text-center"
+          >
+            <img :src="book.src" class="rounded-lg h-52 inline-block" />
+            <div class="text-gray-700 mt-2 text-center truncate">{{ book.name }}</div>
           </div>
         </template>
       </div>
