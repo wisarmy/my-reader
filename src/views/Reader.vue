@@ -1,21 +1,7 @@
 <template>
-  <div class="flex flex-col justify-center items-center h-screen">
+  <div class="flex flex-col justify-center items-center h-screen" v-on:click="turn_page">
     <div class="w-screen max-w-screen-lg mx-auto flex justify-center items-center h-full">
-      <a
-        href="#"
-        @click="prev"
-        class="w-1.5/12 text-gray-500 hover:text-gray-800 px-2 py-2 rounded-md border border-gray-300"
-      >
-        上一页
-      </a>
-      <div id="viewer" class="w-8/12 p-8 bg-white shadow-lg" style="flex: 8"></div>
-      <a
-        href="#"
-        @click="next"
-        class="w-1.5/12 text-gray-500 hover:text-gray-800 px-2 py-2 rounded-md border border-gray-300"
-      >
-        下一页
-      </a>
+      <div id="viewer" class="w-8/12 p-10 bg-white shadow-lg" style="flex: 8"></div>
     </div>
   </div>
 </template>
@@ -46,5 +32,20 @@ function prev() {
 }
 function next() {
   rendition.value?.next();
+}
+function turn_page(event: MouseEvent) {
+  const pageWidth = event.view?.innerWidth;
+  const pageHeight = event.view?.innerHeight;
+  const clickX = event.offsetX;
+  const clickY = event.offsetY;
+  if (typeof pageWidth === "number" && typeof pageHeight === "number") {
+    if (clickX <= pageWidth / 2 && clickY > pageHeight / 2) {
+      prev();
+    } else if (clickX > pageWidth / 2 && clickY > pageHeight / 2) {
+      next();
+    }
+  } else {
+    console.log("pageWidth is not a number");
+  }
 }
 </script>
