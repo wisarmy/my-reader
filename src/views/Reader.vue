@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center items-center h-screen" v-on:click="turn_page">
+  <div class="flex flex-col justify-center items-center h-screen" v-on:click="page_turn">
     <div class="w-screen max-w-screen-lg mx-auto flex justify-center items-center h-full">
       <div id="viewer" class="w-8/12 p-10 bg-white shadow-lg" style="flex: 8"></div>
     </div>
@@ -33,7 +33,7 @@ function prev() {
 function next() {
   rendition.value?.next();
 }
-function turn_page(event: MouseEvent) {
+function page_turn(event: MouseEvent) {
   const pageWidth = event.view?.innerWidth;
   const pageHeight = event.view?.innerHeight;
   const clickX = event.offsetX;
