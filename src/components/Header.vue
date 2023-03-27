@@ -167,7 +167,7 @@ function handleFileSelect(): void {
   fileInput.click();
 }
 
-async function handleFileUpload(event: any, file: any) {
+async function handleFileUpload(event: any, file: File) {
   const fileContent = event.target?.result;
 
   console.log(fileContent);

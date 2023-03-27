@@ -1539,11 +1539,15 @@ name = "my-reader"
 version = "0.0.0"
 dependencies = [
  "base64 0.21.0",
+ "once_cell",
  "serde",
  "serde_json",
  "sqlx",
  "tauri",
  "tauri-build",
+ "thiserror",
+ "tracing",
+ "tracing-subscriber",
 ]
 
 [[package]]
