@@ -110,6 +110,7 @@
     <!-- 头部右边的搜索框 -->
     <div class="relative items-center my-1">
       <input
+        id="search"
         type="text"
         class="px-8 py-0.5 mr-0.5 bg-gray-100 border border-gray-200 rounded-md text-black focus:outline-none focus:border-gray-500 sm:text-sm"
         placeholder="搜索（⌘ K）"
@@ -137,7 +138,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import {
   Listbox,
   ListboxLabel,
@@ -149,6 +150,24 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
 import { writeBinaryFile, BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
 const people = [{ name: "最近" }, { name: "标题" }, { name: "作者" }];
 const selectedPerson = ref(people[0]);
+
+onMounted(() => {
+  // search event
+  const searchInput = document.querySelector("#search") as HTMLInputElement;
+  searchInput.addEventListener("focus", () => {
+    searchInput.classList.add("w-96");
+  });
+  searchInput.addEventListener("blur", () => {
+    searchInput.classList.remove("w-96");
+  });
+  // shortcut key
+  document.addEventListener("keydown", (event: KeyboardEvent) => {
+    if (event.metaKey && event.key === "k") {
+      event.preventDefault();
+      searchInput.focus();
+    }
+  });
+});
 function handleFileSelect(): void {
   const fileInput = document.createElement("input");
   fileInput.type = "file";
