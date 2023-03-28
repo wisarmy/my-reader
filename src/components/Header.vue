@@ -148,6 +148,11 @@ import {
 } from "@headlessui/vue";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
 import { writeBinaryFile, BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
+import ePub, { Book } from "epubjs";
+import { message } from "@tauri-apps/api/dialog";
+import { CONSTANTS } from "../common/constants";
+import { invoke } from "@tauri-apps/api";
+
 const people = [{ name: "最近" }, { name: "标题" }, { name: "作者" }];
 const selectedPerson = ref(people[0]);
 
@@ -168,14 +173,20 @@ onMounted(() => {
     }
   });
 });
-function handleFileSelect(): void {
+async function handleFileSelect(): Promise<void> {
   const fileInput = document.createElement("input");
   fileInput.type = "file";
-  fileInput.accept = ".pdf, .doc, .docx, .jpg, .jpeg, .png";
-  fileInput.addEventListener("change", () => {
+  // accept invalid
+  // fileInput.accept = "application/epub+zip";
+  fileInput.addEventListener("change", async () => {
     const files = fileInput.files;
     if (files && files.length > 0) {
       const file = files[0];
+      console.log(file.type);
+      if (!CONSTANTS.SupportFileAccepts.includes(file.type)) {
+        await message("不支持的文件格式", { title: "文件上传", type: "error" });
+        return;
+      }
       const reader = new FileReader();
       reader.onload = (event) => {
         handleFileUpload(event, file);
@@ -190,8 +201,27 @@ async function handleFileUpload(event: any, file: File) {
   const fileContent = event.target?.result;
 
   console.log(fileContent);
-  // await createDir("books", { dir: BaseDirectory.AppData });
-  await writeBinaryFile("books/" + file.name, new Uint8Array(fileContent), {
+
+  var arrayBuffer = new Uint8Array(fileContent).buffer;
+  var ebook = await ePub(arrayBuffer).ready.then(function (book: any) {
+    return {
+      title: book[2].title,
+      creator: book[2].creator,
+      publisher: book[2].publisher,
+      pubdate: book[2].pubdate,
+      coverUrl: book[3],
+    };
+  });
+  console.log("ebook", ebook);
+  await invoke("add_book", {
+    book: {
+      title: ebook.title,
+      path: "books/" + file.name,
+      cover: ebook.coverUrl,
+      author: ebook.creator,
+    },
+  });
+  await writeBinaryFile("books/" + file.name, new Uint8Array(fileContent).buffer, {
     dir: BaseDirectory.AppData,
   });
 }

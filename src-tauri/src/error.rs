@@ -10,6 +10,8 @@ pub enum AppError {
     Unknown,
     #[error("{0}")]
     Error(String),
+    #[error("io: {0}")]
+    IO(#[from] std::io::Error),
     #[error("sqlx: {0}")]
     Sqlx(#[from] sqlx::error::Error),
     #[error("sqlx migrate: {0}")]

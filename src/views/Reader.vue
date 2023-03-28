@@ -45,7 +45,7 @@ function page_turn(event: MouseEvent) {
       next();
     }
   } else {
-    console.log("pageWidth is not a number");
+    console.log("pageWidth or pageHeight is not a number");
   }
 }
 </script>

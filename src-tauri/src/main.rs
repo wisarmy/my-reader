@@ -4,13 +4,15 @@
 use std::path::PathBuf;
 
 use once_cell::sync::OnceCell;
-use sqlx::SqlitePool;
 use tauri::Manager;
 use tracing_subscriber::{prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt};
 
 pub mod cmd;
-pub mod db;
+mod db;
 pub mod error;
+mod file_manager;
+mod models;
+mod services;
 
 static APP_DIR: OnceCell<PathBuf> = OnceCell::new();
 
@@ -27,17 +29,17 @@ fn main() {
             // set global app dir
             let app_dir = tauri::api::path::app_config_dir(&app.config()).unwrap();
             APP_DIR.set(app_dir.clone()).unwrap();
+            // init file manager
+            file_manager::init().unwrap();
             // init db
             tauri::async_runtime::block_on(async { db::init(app_dir).await.unwrap() });
             // set state db pool
-            app.manage(DbPool(tauri::async_runtime::block_on(async {
+            app.manage(tauri::async_runtime::block_on(async {
                 db::get_pool().await.unwrap()
-            })));
+            }));
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![cmd::read_file])
+        .invoke_handler(tauri::generate_handler![cmd::read_file, cmd::add_book])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
-
-struct DbPool(SqlitePool);

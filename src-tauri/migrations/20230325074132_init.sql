@@ -6,7 +6,7 @@ create table books (
   author text not null,
   path text not null,
   cover text not null,
-  created_at integer not null,
-  updated_at integer not null,
-  deleted_at integer not null
+  created integer not null default 0,
+  updated integer not null default 0,
+  deleted integer not null default 0
 );

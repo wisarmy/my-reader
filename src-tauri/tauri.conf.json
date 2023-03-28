@@ -34,6 +34,9 @@
       "window": {
         "all": false,
         "create": true
+      },
+      "dialog": {
+        "all": true
       }
     },
     "bundle": {
