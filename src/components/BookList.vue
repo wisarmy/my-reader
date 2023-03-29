@@ -20,7 +20,11 @@ onMounted(async () => {
       });
       var arrayBuffer = new Uint8Array(readContent).buffer;
       var ebook = await ePub(arrayBuffer);
-      book.src = await ebook.coverUrl();
+      // book.src = await ebook.coverUrl();
+      book.src = await ebook.archive.createUrl(await ebook.loaded.cover, {
+        base64: true,
+      });
+      console.log(await ebook.loaded.metadata, ebook.loaded.cover);
     } else {
       book.src = await invoke("read_file", { file: book.path });
     }

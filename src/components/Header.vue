@@ -184,7 +184,7 @@ async function handleFileSelect(): Promise<void> {
       const file = files[0];
       console.log(file.type);
       if (!CONSTANTS.SupportFileAccepts.includes(file.type)) {
-        await message("不支持的文件格式", { title: "文件上传", type: "error" });
+        await message("不支持的文件格式", { title: "文件导入", type: "error" });
         return;
       }
       const reader = new FileReader();
@@ -198,31 +198,31 @@ async function handleFileSelect(): Promise<void> {
 }
 
 async function handleFileUpload(event: any, file: File) {
+  let filePath = "books/" + file.name;
   const fileContent = event.target?.result;
-
-  console.log(fileContent);
-
-  var arrayBuffer = new Uint8Array(fileContent).buffer;
-  var ebook = await ePub(arrayBuffer).ready.then(function (book: any) {
-    return {
-      title: book[2].title,
-      creator: book[2].creator,
-      publisher: book[2].publisher,
-      pubdate: book[2].pubdate,
-      coverUrl: book[3],
-    };
+  let arrayBuffer = new Uint8Array(fileContent).buffer;
+  let ebook = await ePub(arrayBuffer);
+  let metadata = await ebook.loaded.metadata;
+  let cover = await ebook.archive.createUrl(await ebook.loaded.cover, {
+    base64: true,
   });
-  console.log("ebook", ebook);
-  await invoke("add_book", {
-    book: {
-      title: ebook.title,
-      path: "books/" + file.name,
-      cover: ebook.coverUrl,
-      author: ebook.creator,
-    },
-  });
-  await writeBinaryFile("books/" + file.name, new Uint8Array(fileContent).buffer, {
-    dir: BaseDirectory.AppData,
-  });
+  // console.log("ebook metadata", metadata);
+  try {
+    await writeBinaryFile(filePath, arrayBuffer, {
+      dir: BaseDirectory.AppData,
+    });
+    await invoke("add_book", {
+      book: {
+        title: metadata.title,
+        path: filePath,
+        cover: cover,
+        author: metadata.creator,
+      },
+    });
+    await message("导入成功");
+  } catch (error: any) {
+    console.log("import error: ", error);
+    await message(error, { title: "文件导入", type: "error" });
+  }
 }
 </script>
