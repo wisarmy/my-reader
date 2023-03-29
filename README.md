@@ -1,5 +1,5 @@
 # MyReader
-Your personal reader
+A concise e-book reader written in rust
 # Feature
 - Format support:
     - [ ] epub
