@@ -7,7 +7,7 @@ import Reader from "../views/Reader.vue";
 const routes = [
     { path: "/", component: Main },
     { path: "/config", component: Config },
-    { path: "/reader", component: Reader, props: (route: any) => ({ query: route.query.path }) },
+    { path: "/reader", component: Reader, props: (route: any) => ({ query: route.query }) },
 ];
 
 const router = createRouter({

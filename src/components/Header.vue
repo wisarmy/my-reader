@@ -147,14 +147,20 @@ import {
   ListboxOption,
 } from "@headlessui/vue";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
-import { writeBinaryFile, BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
+import { writeBinaryFile, BaseDirectory } from "@tauri-apps/api/fs";
 import ePub, { Book } from "epubjs";
 import { message } from "@tauri-apps/api/dialog";
 import { CONSTANTS } from "../common/constants";
 import { invoke } from "@tauri-apps/api";
+import { useI18n } from "vue-i18n";
+import { appWindow } from "@tauri-apps/api/window";
 
+const { t, locale } = useI18n();
 const people = [{ name: "最近" }, { name: "标题" }, { name: "作者" }];
 const selectedPerson = ref(people[0]);
+
+locale.value = "zh";
+appWindow.setTitle(t("appname"));
 
 onMounted(() => {
   // search event

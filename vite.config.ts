@@ -1,5 +1,8 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
+import path from 'path'
+
 
 const mobile =
   process.env.TAURI_PLATFORM === "android" ||
@@ -7,7 +10,9 @@ const mobile =
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [vue()],
+  plugins: [vue(), VueI18nPlugin({
+    include: path.resolve(__dirname, './src/locales/**')
+  }),],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   // prevent vite from obscuring rust errors

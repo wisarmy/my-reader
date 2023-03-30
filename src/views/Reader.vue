@@ -10,12 +10,14 @@ import { ref, onMounted } from "vue";
 import { BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
 import ePub from "epubjs";
 import { Rendition } from "epubjs";
-const props = defineProps(["query"]);
-console.log("path: ", props.query);
+
+const { query } = defineProps(["query"]);
+console.log("query: ", query);
+
 const rendition = ref<Rendition>();
 
 onMounted(async () => {
-  var readContent = await readBinaryFile(props.query, {
+  var readContent = await readBinaryFile(query.path, {
     dir: BaseDirectory.AppData,
   });
   var arrayBuffer = new Uint8Array(readContent).buffer;

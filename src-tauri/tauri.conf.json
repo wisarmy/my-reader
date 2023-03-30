@@ -32,8 +32,7 @@
         ]
       },
       "window": {
-        "all": false,
-        "create": true
+        "all": true
       },
       "dialog": {
         "all": true
