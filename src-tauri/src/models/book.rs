@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use sqlx::{QueryBuilder, Sqlite};
 
 use crate::{app_error, db::DbPool, error::Result};
 
@@ -71,6 +72,30 @@ pub async fn get(pool: &DbPool, id: i64) -> Result<Book> {
     Ok(book)
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ListParams {
+    pub limit: Option<(i64, i64)>,
+    pub kw: Option<String>,
+}
+/// list book with filters
+pub async fn lists(pool: &DbPool, filter: ListParams) -> Result<Vec<Book>> {
+    let mut query: QueryBuilder<Sqlite> =
+        QueryBuilder::new("select * from books where deleted = 0");
+
+    if let Some(kw) = filter.kw {
+        query.push(format!(
+            " and (title LIKE '%{}%' or author LIKE '%{}%')",
+            kw, kw
+        ));
+    }
+    query.push(" order by created DESC");
+    if let Some(limit) = filter.limit {
+        query.push(format!(" limit {},{}", limit.0, limit.1));
+    }
+    let books = query.build_query_as().fetch_all(&pool.0).await?;
+    Ok(books)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -103,5 +128,29 @@ mod tests {
         assert!(exists_res);
         let exists_res = exists(&pool, "test_path_x").await.unwrap();
         assert!(!exists_res);
+    }
+    #[tokio::test]
+    async fn test_lists() {
+        let pool = get_test_pool().await;
+        let mut book = AddBookParams {
+            path: "test_path".to_string(),
+            title: "test_title".to_string(),
+            author: "".to_string(),
+            cover: "".to_string(),
+        };
+        let _add_res = add(&pool, book.clone()).await.unwrap();
+        book.path = "test_path_2".to_string();
+        book.title = "test_title_2".to_string();
+        let _add_res = add(&pool, book.clone()).await.unwrap();
+        book.path = "test_path_3".to_string();
+        book.title = "test_title_3".to_string();
+        let _add_res = add(&pool, book.clone()).await.unwrap();
+        let filter = ListParams {
+            limit: Some((0, 10)),
+            kw: Some("test_title".to_string()),
+        };
+
+        let books = lists(&pool, filter).await.unwrap();
+        assert_eq!(books.len(), 3);
     }
 }

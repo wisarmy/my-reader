@@ -5,30 +5,14 @@ import { invoke } from "@tauri-apps/api";
 import ePub from "epubjs";
 import { WebviewWindow } from "@tauri-apps/api/window";
 
+interface Filter {
+  limit?: [number, number];
+}
 const books = ref<any[]>([]);
 
 onMounted(async () => {
-  books.value = await readDir("books", { dir: BaseDirectory.AppData });
-  console.log(books);
-
-  // 将图片文件转换为 Base64 编码
-  for (const book of books.value) {
-    if (book.name.endsWith(".epub")) {
-      console.log(book.name);
-      var readContent = await readBinaryFile("books/" + book.name, {
-        dir: BaseDirectory.AppData,
-      });
-      var arrayBuffer = new Uint8Array(readContent).buffer;
-      var ebook = await ePub(arrayBuffer);
-      // book.src = await ebook.coverUrl();
-      book.src = await ebook.archive.createUrl(await ebook.loaded.cover, {
-        base64: true,
-      });
-      console.log(await ebook.loaded.metadata, ebook.loaded.cover);
-    } else {
-      book.src = await invoke("read_file", { file: book.path });
-    }
-  }
+  const filter: Filter = { limit: [0, 10] };
+  books.value = await invoke("list_books", { filter: filter });
 });
 // preview book
 function preview(path: string) {
@@ -46,13 +30,13 @@ function preview(path: string) {
       >
         <template v-for="book in books">
           <div
-            v-if="book.src"
+            v-if="book.cover"
             :key="book.path"
-            @click="preview('books/' + book.name)"
+            @click="preview(book.path)"
             class="text-center"
           >
-            <img :src="book.src" class="rounded-lg h-52 inline-block" />
-            <div class="text-gray-700 mt-2 text-center truncate">{{ book.name }}</div>
+            <img :src="book.cover" class="rounded-lg h-52 inline-block" />
+            <div class="text-gray-700 mt-2 text-center truncate">{{ book.title }}</div>
           </div>
         </template>
       </div>

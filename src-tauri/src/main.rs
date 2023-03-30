@@ -39,7 +39,11 @@ fn main() {
             }));
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![cmd::read_file, cmd::add_book])
+        .invoke_handler(tauri::generate_handler![
+            cmd::read_file,
+            cmd::add_book,
+            cmd::list_books
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

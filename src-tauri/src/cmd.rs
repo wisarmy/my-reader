@@ -28,6 +28,17 @@ pub async fn add_book(
     let result = book::add(&pool, book).await.map_err(|e| format!("{}", e))?;
     Ok(result)
 }
+/// list books
+#[tauri::command]
+pub async fn list_books(
+    pool: tauri::State<'_, DbPool>,
+    filter: book::ListParams,
+) -> Result<Vec<Book>, String> {
+    let result = book::lists(&pool, filter)
+        .await
+        .map_err(|e| format!("{}", e))?;
+    Ok(result)
+}
 
 #[cfg(test)]
 mod tests {
