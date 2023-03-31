@@ -5,7 +5,6 @@ A concise e-book reader written in rust
     - [ ] epub
     - [ ] txt
 - Platform support: 
-    - [x] Web
     - [x] MacOS
     - [ ] Windows
     - [ ] Linux
