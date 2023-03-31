@@ -52,7 +52,7 @@ function page_turn(event: MouseEvent) {
     } else if (clickX > pageWidth / 2 && clickY > pageHeight / 2) {
       next();
     }
-    rendition.value?.getContents()[0].documentElement.scrollIntoView();
+    (rendition.value?.getContents() as any)[0]?.documentElement.scrollIntoView();
   } else {
     console.log("pageWidth or pageHeight is not a number");
   }
