@@ -154,6 +154,8 @@ import { CONSTANTS } from "../common/constants";
 import { invoke } from "@tauri-apps/api";
 import { useI18n } from "vue-i18n";
 import { appWindow } from "@tauri-apps/api/window";
+import { useBookStore } from "../stores/book";
+const store = useBookStore();
 
 const { t, locale } = useI18n();
 const people = [{ name: "最近" }, { name: "标题" }, { name: "作者" }];
@@ -217,15 +219,12 @@ async function handleFileUpload(event: any, file: File) {
     await writeBinaryFile(filePath, arrayBuffer, {
       dir: BaseDirectory.AppData,
     });
-    await invoke("add_book", {
-      book: {
-        title: metadata.title,
-        path: filePath,
-        cover: cover,
-        author: metadata.creator,
-      },
+    await store.addBook({
+      title: metadata.title,
+      path: filePath,
+      cover: cover,
+      author: metadata.creator,
     });
-    await message("导入成功");
   } catch (error: any) {
     console.log("import error: ", error);
     await message(error, { title: "文件导入", type: "error" });

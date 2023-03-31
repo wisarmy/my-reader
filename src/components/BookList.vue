@@ -1,18 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { readDir, BaseDirectory, readTextFile, readBinaryFile } from "@tauri-apps/api/fs";
-import { invoke } from "@tauri-apps/api";
-import ePub from "epubjs";
+import { onMounted } from "vue";
 import { WebviewWindow } from "@tauri-apps/api/window";
-
-interface Filter {
-  limit?: [number, number];
-}
-const books = ref<any[]>([]);
+import { useBookStore, Filter } from "../stores/book";
+const store = useBookStore();
 
 onMounted(async () => {
   const filter: Filter = { limit: [0, 10] };
-  books.value = await invoke("list_books", { filter: filter });
+  store.loadBookList(filter);
 });
 // preview book
 function preview(path: string) {
@@ -28,7 +22,7 @@ function preview(path: string) {
       <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
       >
-        <template v-for="book in books">
+        <template v-for="book in store.booklist">
           <div
             v-if="book.cover"
             :key="book.path"
