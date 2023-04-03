@@ -4,6 +4,7 @@ import { invoke } from '@tauri-apps/api';
 
 export interface Filter {
     limit?: [number, number];
+    kw: string;
 }
 export interface AddBookParams {
     title: string;

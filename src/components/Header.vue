@@ -154,7 +154,7 @@ import { CONSTANTS } from "../common/constants";
 import { invoke } from "@tauri-apps/api";
 import { useI18n } from "vue-i18n";
 import { appWindow } from "@tauri-apps/api/window";
-import { useBookStore } from "../stores/book";
+import { Filter, useBookStore } from "../stores/book";
 const store = useBookStore();
 
 const { t, locale } = useI18n();
@@ -175,9 +175,30 @@ onMounted(() => {
   });
   // shortcut key
   document.addEventListener("keydown", (event: KeyboardEvent) => {
+    console.log(event.key);
     if (event.metaKey && event.key === "k") {
       event.preventDefault();
       searchInput.focus();
+    }
+    if (event.key === "Escape") {
+      searchInput.blur();
+    }
+  });
+  // load books when the input method is completed
+  let inputting = false;
+  searchInput.addEventListener("compositionstart", () => {
+    inputting = true;
+  });
+  searchInput.addEventListener("compositionend", () => {
+    inputting = false;
+    const filter: Filter = { limit: [0, 10], kw: searchInput.value };
+    store.loadBookList(filter);
+  });
+  // load books when search input value changed
+  searchInput.addEventListener("input", async () => {
+    if (!inputting) {
+      const filter: Filter = { limit: [0, 10], kw: searchInput.value };
+      store.loadBookList(filter);
     }
   });
 });
