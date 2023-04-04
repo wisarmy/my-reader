@@ -1,8 +1,17 @@
 <template>
   <div id="reader" class="flex h-screen">
     <ReaderNav />
+    <ReaderMenu
+      :top="readerMenu.top"
+      :left="readerMenu.left"
+      :visibility="readerMenu.visibility"
+    />
     <div class="w-full max-w-screen-2xl mx-auto items-center" v-on:click="page_turn">
-      <div id="viewer" class="p-10 bg-white shadow-lg h-screen" style="flex: 8"></div>
+      <div
+        id="viewer"
+        class="pl-10 pr-10 pt-10 bg-white shadow-lg h-screen"
+        style="flex: 8"
+      ></div>
     </div>
     <ReaderAnnotation />
   </div>
@@ -10,15 +19,17 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
-import ePub from "epubjs";
+import ePub, { Contents, EpubCFI } from "epubjs";
 import { Rendition } from "epubjs";
 import ReaderNav from "@/components/ReaderNav.vue";
 import ReaderAnnotation from "@/components/ReaderAnnotation.vue";
+import ReaderMenu from "@/components/ReaderMenu.vue";
 
 const { query } = defineProps(["query"]);
 console.log("query: ", query);
 
 const rendition = ref<Rendition>();
+const readerMenu = ref({ left: "0px", top: "0px", visibility: "hidden" });
 
 onMounted(async () => {
   var readContent = await readBinaryFile(query.path, {
@@ -34,34 +45,39 @@ onMounted(async () => {
   });
 
   var displayed = rendition.value.display();
-
   // Navigation loaded
   ebook.loaded.navigation.then(function (toc) {
-    console.log(toc);
+    console.log("toc: ", toc);
   });
+
   rendition.value.on("relocated", function (location: any) {
-    console.log(location);
+    console.log("location: ", location);
   });
-  rendition.value.hooks.render.register(function (view) {
-    var adder = [[".annotator-adder, .annotator-outer", ["position", "fixed"]]];
 
-    view.addStylesheetRules(adder);
+  rendition.value.hooks.content.register(function (contents: Contents, view: Rendition) {
+    const paragraphs = contents.content.querySelectorAll("p");
+    paragraphs.forEach((p) => {
+      p.innerHTML = p.innerHTML.replace(/时间/g, "<span style='color: red'>时间</span>");
+    });
+  });
 
-    view.window.Annotator.Util.mousePosition = function (event) {
-      console.log("mouse position", event);
-      var body = view.document.body;
-      // var offset = view.position();
-
-      return {
-        top: event.pageY,
-        left: event.pageX,
+  var selected = false;
+  var selectContents = "";
+  // mouse up
+  rendition.value.on("mouseup", function (e: any) {
+    if (!selected && selectContents) {
+      console.log("mouseup", e, selectContents);
+      readerMenu.value = {
+        left: e.screenX + "px",
+        top: e.screenY + "px",
+        visibility: "visible",
       };
-    };
-    var ann = new view.window.Annotator(view.document.body);
-    console.log(ann);
+      selectContents = "";
+    }
   });
 
   rendition.value.on("selected", function (cfiRange: any, contents: any) {
+    selected = true;
     rendition.value?.annotations.highlight(
       cfiRange,
       {},
@@ -72,11 +88,13 @@ onMounted(async () => {
       { fill: "red" }
     );
     contents.window.getSelection().removeAllRanges();
+    selectContents = contents.window.getSelection();
+    selected = false;
   });
   var highlights = document.getElementById("highlights");
 
-  rendition.value.on("selected", function (cfiRange: any) {
-    console.log("renderer:selected", cfiRange);
+  rendition.value.on("selected", function (cfiRange: any, contents: any) {
+    console.log("renderer:selected", cfiRange, contents.window.getSelection());
 
     ebook.getRange(cfiRange).then(function (range) {
       var text;
@@ -113,7 +131,6 @@ function prev() {
   rendition.value?.prev();
 }
 function next() {
-  window.scrollTo(0, 0);
   rendition.value?.next();
 }
 

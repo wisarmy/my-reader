@@ -1,6 +1,6 @@
 <script setup></script>
 <template>
-  <div class="w-16 justify-between border-r bg-white">
+  <div class="flex h-screen w-16 flex-col justify-between border-r bg-white">
     <div>
       <div class="inline-flex h-16 w-16 items-center justify-center">
         <span
