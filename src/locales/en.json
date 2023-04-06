@@ -1,3 +1,5 @@
 {
-    "appname": "MyReader"
+    "appname": "MyReader",
+    "toc": "Table of Contents",
+    "bookmark": "Bookmark"
 }

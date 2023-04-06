@@ -1,17 +1,17 @@
 <template>
   <div id="reader" class="flex h-screen">
     <ReaderNav />
+    <ReaderToc :rendition="readerRendition" :nav="readerNav" />
     <ReaderMenu
       :top="readerMenu.top"
       :left="readerMenu.left"
       :visibility="readerMenu.visibility"
     />
-    <div class="w-full max-w-screen-2xl mx-auto items-center" v-on:click="page_turn">
-      <div
-        id="viewer"
-        class="pl-10 pr-10 pt-10 bg-white shadow-lg h-screen"
-        style="flex: 8"
-      ></div>
+    <div
+      class="w-full max-w-screen-2xl mx-auto items-center h-screen"
+      v-on:click="page_turn"
+    >
+      <div id="viewer" class="p-10 bg-white shadow-lg h-screen"></div>
     </div>
     <ReaderAnnotation />
   </div>
@@ -19,17 +19,22 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
-import ePub, { Contents, EpubCFI } from "epubjs";
+import ePub, { Contents } from "epubjs";
 import { Rendition } from "epubjs";
 import ReaderNav from "@/components/ReaderNav.vue";
 import ReaderAnnotation from "@/components/ReaderAnnotation.vue";
 import ReaderMenu from "@/components/ReaderMenu.vue";
+import ReaderToc from "@/components/ReaderToc.vue";
+import { useBookStore } from "../stores/book";
+import Navigation from "epubjs/types/navigation";
 
 const { query } = defineProps(["query"]);
 console.log("query: ", query);
+const store = useBookStore();
 
-const rendition = ref<Rendition>();
 const readerMenu = ref({ left: "0px", top: "0px", visibility: "hidden" });
+const readerRendition = ref<Rendition>();
+const readerNav = ref<Navigation>();
 
 onMounted(async () => {
   var readContent = await readBinaryFile(query.path, {
@@ -37,24 +42,28 @@ onMounted(async () => {
   });
   var arrayBuffer = new Uint8Array(readContent).buffer;
   var ebook = ePub(arrayBuffer, {});
-  rendition.value = ebook.renderTo("viewer", {
+  const identifier = (await ebook.loaded.metadata).identifier;
+  store.ebook.set(identifier, ebook);
+  var rendition = ebook.renderTo("viewer", {
     flow: "scrolled-continuous",
     width: "100%",
     height: "100%",
     allowScriptedContent: true,
   });
+  readerRendition.value = rendition;
 
-  var displayed = rendition.value.display();
+  rendition.display();
   // Navigation loaded
-  ebook.loaded.navigation.then(function (toc) {
-    console.log("toc: ", toc);
+  ebook.loaded.navigation.then(function (nav: Navigation) {
+    readerNav.value = nav;
+    // console.log("nav: ", nav);
   });
 
-  rendition.value.on("relocated", function (location: any) {
+  rendition.on("relocated", function (location: any) {
     console.log("location: ", location);
   });
 
-  rendition.value.hooks.content.register(function (contents: Contents, view: Rendition) {
+  rendition.hooks.content.register(function (contents: Contents, view: Rendition) {
     const paragraphs = contents.content.querySelectorAll("p");
     paragraphs.forEach((p) => {
       p.innerHTML = p.innerHTML.replace(/时间/g, "<span style='color: red'>时间</span>");
@@ -64,7 +73,7 @@ onMounted(async () => {
   var selected = false;
   var selectContents = "";
   // mouse up
-  rendition.value.on("mouseup", function (e: any) {
+  rendition.on("mouseup", function (e: any) {
     if (!selected && selectContents) {
       console.log("mouseup", e, selectContents);
       readerMenu.value = {
@@ -76,9 +85,9 @@ onMounted(async () => {
     }
   });
 
-  rendition.value.on("selected", function (cfiRange: any, contents: any) {
+  rendition.on("selected", function (cfiRange: any, contents: any) {
     selected = true;
-    rendition.value?.annotations.highlight(
+    rendition?.annotations.highlight(
       cfiRange,
       {},
       (e: any) => {
@@ -93,7 +102,7 @@ onMounted(async () => {
   });
   var highlights = document.getElementById("highlights");
 
-  rendition.value.on("selected", function (cfiRange: any, contents: any) {
+  rendition.on("selected", function (cfiRange: any, contents: any) {
     console.log("renderer:selected", cfiRange, contents.window.getSelection());
 
     ebook.getRange(cfiRange).then(function (range) {
@@ -110,12 +119,12 @@ onMounted(async () => {
         a.textContent = cfiRange;
         a.href = "#" + cfiRange;
         a.onclick = function () {
-          rendition.value?.display(cfiRange);
+          rendition?.display(cfiRange);
         };
         remove.textContent = "remove";
         remove.href = "#" + cfiRange;
         remove.onclick = function () {
-          rendition.value?.annotations.remove(cfiRange, "highlight");
+          rendition?.annotations.remove(cfiRange, "highlight");
           return false;
         };
 
@@ -128,10 +137,10 @@ onMounted(async () => {
   });
 });
 function prev() {
-  rendition.value?.prev();
+  readerRendition.value?.prev();
 }
 function next() {
-  rendition.value?.next();
+  readerRendition.value?.next();
 }
 
 function page_turn(event: MouseEvent) {
@@ -145,7 +154,7 @@ function page_turn(event: MouseEvent) {
     } else if (clickX > pageWidth / 2 && clickY > pageHeight / 2) {
       next();
     }
-    (rendition.value?.getContents() as any)[0]?.documentElement.scrollIntoView();
+    (readerRendition.value?.getContents() as any)[0]?.documentElement.scrollIntoView();
   } else {
     console.log("pageWidth or pageHeight is not a number");
   }

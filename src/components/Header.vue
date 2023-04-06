@@ -148,10 +148,9 @@ import {
 } from "@headlessui/vue";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
 import { writeBinaryFile, BaseDirectory } from "@tauri-apps/api/fs";
-import ePub, { Book } from "epubjs";
+import ePub from "epubjs";
 import { message } from "@tauri-apps/api/dialog";
 import { CONSTANTS } from "../common/constants";
-import { invoke } from "@tauri-apps/api";
 import { useI18n } from "vue-i18n";
 import { appWindow } from "@tauri-apps/api/window";
 import { Filter, useBookStore } from "../stores/book";
