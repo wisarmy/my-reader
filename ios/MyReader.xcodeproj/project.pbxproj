@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE5E42672A04ED3600181764 /* R2Navigator in Frameworks */ = {isa = PBXBuildFile; productRef = DE5E42662A04ED3600181764 /* R2Navigator */; };
+		DE5E42692A04ED3600181764 /* R2Shared in Frameworks */ = {isa = PBXBuildFile; productRef = DE5E42682A04ED3600181764 /* R2Shared */; };
+		DE5E426B2A04ED3600181764 /* R2Streamer in Frameworks */ = {isa = PBXBuildFile; productRef = DE5E426A2A04ED3600181764 /* R2Streamer */; };
+		DE5E426D2A04ED3600181764 /* ReadiumAdapterGCDWebServer in Frameworks */ = {isa = PBXBuildFile; productRef = DE5E426C2A04ED3600181764 /* ReadiumAdapterGCDWebServer */; };
+		DE5E426F2A04ED3600181764 /* ReadiumLCP in Frameworks */ = {isa = PBXBuildFile; productRef = DE5E426E2A04ED3600181764 /* ReadiumLCP */; };
+		DE5E42712A04ED3600181764 /* ReadiumOPDS in Frameworks */ = {isa = PBXBuildFile; productRef = DE5E42702A04ED3600181764 /* ReadiumOPDS */; };
+		DE5E42742A04ED8500181764 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = DE5E42732A04ED8500181764 /* GRDB */; };
+		DE5E42772A04EE2300181764 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DE5E42762A04EE2300181764 /* Kingfisher */; };
+		DE5E427A2A04EE8E00181764 /* MBProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = DE5E42792A04EE8E00181764 /* MBProgressHUD */; };
+		DE5E427C2A04EF4C00181764 /* Publication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5E427B2A04EF4C00181764 /* Publication.swift */; };
+		DE6A02F32A04F2B300F1B747 /* AnyPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6A02F22A04F2B300F1B747 /* AnyPublisher.swift */; };
+		DE6A02F52A04F30300F1B747 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6A02F42A04F30300F1B747 /* Future.swift */; };
+		DE7D53B22A04ACCC00AE3C84 /* BookshelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D53B12A04ACCC00AE3C84 /* BookshelfView.swift */; };
+		DE7D53B52A04ADD300AE3C84 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D53B42A04ADD300AE3C84 /* Book.swift */; };
+		DE7D53B82A04AE5200AE3C84 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D53B72A04AE5200AE3C84 /* Paths.swift */; };
 		DEDAE3162A03B33D0013E657 /* MyReaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDAE3152A03B33D0013E657 /* MyReaderApp.swift */; };
 		DEDAE3182A03B33D0013E657 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDAE3172A03B33D0013E657 /* ContentView.swift */; };
 		DEDAE31A2A03B33E0013E657 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEDAE3192A03B33E0013E657 /* Assets.xcassets */; };
@@ -14,6 +29,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE5E427B2A04EF4C00181764 /* Publication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publication.swift; sourceTree = "<group>"; };
+		DE6A02F22A04F2B300F1B747 /* AnyPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPublisher.swift; sourceTree = "<group>"; };
+		DE6A02F42A04F30300F1B747 /* Future.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
+		DE7D53B12A04ACCC00AE3C84 /* BookshelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookshelfView.swift; sourceTree = "<group>"; };
+		DE7D53B42A04ADD300AE3C84 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		DE7D53B72A04AE5200AE3C84 /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
 		DEDAE3122A03B33D0013E657 /* MyReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEDAE3152A03B33D0013E657 /* MyReaderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReaderApp.swift; sourceTree = "<group>"; };
 		DEDAE3172A03B33D0013E657 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -26,12 +47,64 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE5E42712A04ED3600181764 /* ReadiumOPDS in Frameworks */,
+				DE5E426B2A04ED3600181764 /* R2Streamer in Frameworks */,
+				DE5E426D2A04ED3600181764 /* ReadiumAdapterGCDWebServer in Frameworks */,
+				DE5E427A2A04EE8E00181764 /* MBProgressHUD in Frameworks */,
+				DE5E42672A04ED3600181764 /* R2Navigator in Frameworks */,
+				DE5E42772A04EE2300181764 /* Kingfisher in Frameworks */,
+				DE5E426F2A04ED3600181764 /* ReadiumLCP in Frameworks */,
+				DE5E42742A04ED8500181764 /* GRDB in Frameworks */,
+				DE5E42692A04ED3600181764 /* R2Shared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DE6A02F02A04F29200F1B747 /* Toolkit */ = {
+			isa = PBXGroup;
+			children = (
+				DE6A02F12A04F29F00F1B747 /* Extensions */,
+			);
+			path = Toolkit;
+			sourceTree = "<group>";
+		};
+		DE6A02F12A04F29F00F1B747 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DE6A02F22A04F2B300F1B747 /* AnyPublisher.swift */,
+				DE6A02F42A04F30300F1B747 /* Future.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DE7D53B02A04AC9E00AE3C84 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DE7D53B12A04ACCC00AE3C84 /* BookshelfView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DE7D53B32A04ADB400AE3C84 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DE7D53B42A04ADD300AE3C84 /* Book.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DE7D53B62A04AE3A00AE3C84 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				DE6A02F02A04F29200F1B747 /* Toolkit */,
+				DE7D53B72A04AE5200AE3C84 /* Paths.swift */,
+				DE5E427B2A04EF4C00181764 /* Publication.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		DEDAE3092A03B33D0013E657 = {
 			isa = PBXGroup;
 			children = (
@@ -51,6 +124,9 @@
 		DEDAE3142A03B33D0013E657 /* MyReader */ = {
 			isa = PBXGroup;
 			children = (
+				DE7D53B62A04AE3A00AE3C84 /* Common */,
+				DE7D53B32A04ADB400AE3C84 /* Model */,
+				DE7D53B02A04AC9E00AE3C84 /* View */,
 				DEDAE3152A03B33D0013E657 /* MyReaderApp.swift */,
 				DEDAE3172A03B33D0013E657 /* ContentView.swift */,
 				DEDAE3192A03B33E0013E657 /* Assets.xcassets */,
@@ -83,6 +159,17 @@
 			dependencies = (
 			);
 			name = MyReader;
+			packageProductDependencies = (
+				DE5E42662A04ED3600181764 /* R2Navigator */,
+				DE5E42682A04ED3600181764 /* R2Shared */,
+				DE5E426A2A04ED3600181764 /* R2Streamer */,
+				DE5E426C2A04ED3600181764 /* ReadiumAdapterGCDWebServer */,
+				DE5E426E2A04ED3600181764 /* ReadiumLCP */,
+				DE5E42702A04ED3600181764 /* ReadiumOPDS */,
+				DE5E42732A04ED8500181764 /* GRDB */,
+				DE5E42762A04EE2300181764 /* Kingfisher */,
+				DE5E42792A04EE8E00181764 /* MBProgressHUD */,
+			);
 			productName = MyReader;
 			productReference = DEDAE3122A03B33D0013E657 /* MyReader.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +198,12 @@
 				Base,
 			);
 			mainGroup = DEDAE3092A03B33D0013E657;
+			packageReferences = (
+				DE5E42652A04ED3600181764 /* XCRemoteSwiftPackageReference "swift-toolkit" */,
+				DE5E42722A04ED8500181764 /* XCRemoteSwiftPackageReference "GRDB" */,
+				DE5E42752A04EE2300181764 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				DE5E42782A04EE8E00181764 /* XCRemoteSwiftPackageReference "MBProgressHUD" */,
+			);
 			productRefGroup = DEDAE3132A03B33D0013E657 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,8 +230,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE5E427C2A04EF4C00181764 /* Publication.swift in Sources */,
+				DE7D53B52A04ADD300AE3C84 /* Book.swift in Sources */,
+				DE6A02F52A04F30300F1B747 /* Future.swift in Sources */,
+				DE7D53B82A04AE5200AE3C84 /* Paths.swift in Sources */,
 				DEDAE3182A03B33D0013E657 /* ContentView.swift in Sources */,
+				DE6A02F32A04F2B300F1B747 /* AnyPublisher.swift in Sources */,
 				DEDAE3162A03B33D0013E657 /* MyReaderApp.swift in Sources */,
+				DE7D53B22A04ACCC00AE3C84 /* BookshelfView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,7 +294,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -249,7 +348,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -337,6 +436,89 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DE5E42652A04ED3600181764 /* XCRemoteSwiftPackageReference "swift-toolkit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/readium/swift-toolkit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		DE5E42722A04ED8500181764 /* XCRemoteSwiftPackageReference "GRDB" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		DE5E42752A04EE2300181764 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+		DE5E42782A04EE8E00181764 /* XCRemoteSwiftPackageReference "MBProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jdg/MBProgressHUD";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DE5E42662A04ED3600181764 /* R2Navigator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE5E42652A04ED3600181764 /* XCRemoteSwiftPackageReference "swift-toolkit" */;
+			productName = R2Navigator;
+		};
+		DE5E42682A04ED3600181764 /* R2Shared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE5E42652A04ED3600181764 /* XCRemoteSwiftPackageReference "swift-toolkit" */;
+			productName = R2Shared;
+		};
+		DE5E426A2A04ED3600181764 /* R2Streamer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE5E42652A04ED3600181764 /* XCRemoteSwiftPackageReference "swift-toolkit" */;
+			productName = R2Streamer;
+		};
+		DE5E426C2A04ED3600181764 /* ReadiumAdapterGCDWebServer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE5E42652A04ED3600181764 /* XCRemoteSwiftPackageReference "swift-toolkit" */;
+			productName = ReadiumAdapterGCDWebServer;
+		};
+		DE5E426E2A04ED3600181764 /* ReadiumLCP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE5E42652A04ED3600181764 /* XCRemoteSwiftPackageReference "swift-toolkit" */;
+			productName = ReadiumLCP;
+		};
+		DE5E42702A04ED3600181764 /* ReadiumOPDS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE5E42652A04ED3600181764 /* XCRemoteSwiftPackageReference "swift-toolkit" */;
+			productName = ReadiumOPDS;
+		};
+		DE5E42732A04ED8500181764 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE5E42722A04ED8500181764 /* XCRemoteSwiftPackageReference "GRDB" */;
+			productName = GRDB;
+		};
+		DE5E42762A04EE2300181764 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE5E42752A04EE2300181764 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		DE5E42792A04EE8E00181764 /* MBProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE5E42782A04EE8E00181764 /* XCRemoteSwiftPackageReference "MBProgressHUD" */;
+			productName = MBProgressHUD;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DEDAE30A2A03B33D0013E657 /* Project object */;
 }
