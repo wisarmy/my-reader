@@ -13,14 +13,13 @@ struct ContentView: View {
             ZStack {
                 Rectangle().foregroundColor(Color(UIColor(white: 0.95, alpha: 1.0)))
                     .edgesIgnoringSafeArea(.top)
-                VStack {
-                    Text("书架")
-                    Spacer()
-                }
+                BookshelfView(books: Book.sampleData)
+                
             }.tabItem {
                 Image(systemName: "books.vertical")
                 Text("书架")
             }
+            
             ZStack {
                 Rectangle().foregroundColor(Color(UIColor(white: 0.95, alpha: 1.0)))
                     .edgesIgnoringSafeArea(.top)

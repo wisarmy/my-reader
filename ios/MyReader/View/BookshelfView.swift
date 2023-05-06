@@ -8,17 +8,52 @@
 import SwiftUI
 
 struct BookshelfView: View {
+    var books: [Book]
+    @State var showingAddBookActionSheet = false
     var body: some View {
-        ScrollView(.vertical) {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 15))], spacing: 20) {
+        NavigationView {
+            ScrollView(.vertical) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
+                    ForEach(books) { book in
+                        NavigationLink(destination: BookDetailView(book:book)){
+                            VStack {
+                                Text(book.title)
+                                    .foregroundColor(.black)
+                                Image(book.coverPath ?? "")
+                                    .resizable()
+                                    .frame(maxWidth: 100, maxHeight: 150)
+                            }
+                        }
+                        
+                    }
+                }
+                
                 
             }
+            .padding()
+            .navigationTitle("书架")
+            .navigationBarItems(trailing: Button(action: {
+                showingAddBookActionSheet = true
+            }) {
+                Image(systemName: "plus")
+                    .foregroundColor(.blue)
+            })
+            .actionSheet(isPresented: $showingAddBookActionSheet) {
+                ActionSheet(title: Text("添加书籍"), message: Text("选择要添加书籍的方式"), buttons: [
+                    .default(Text("您的设备")) {
+                    },
+                    .default(Text("网络链接")) {
+                    },
+                    .cancel()
+                ])
+            }
         }
+
     }
 }
 
 struct BookshelfView_Previews: PreviewProvider {
     static var previews: some View {
-        BookshelfView()
+        BookshelfView(books: Book.sampleData)
     }
 }

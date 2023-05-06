@@ -10,7 +10,7 @@ import Foundation
 import GRDB
 import R2Shared
 
-struct Book: Codable {
+struct Book: Codable, Identifiable {
     struct Id: EntityId { let rawValue: Int64 }
     
     let id: Id?
@@ -98,4 +98,18 @@ final class BookRepository {
             """)
         }
     }
+}
+
+extension Book {
+    static let sampleData: [Book] = [
+        Book(id: 1, title: "朝花夕拾", type: "epub", path: "/books/zhaohuaxishi", coverPath: "zhaohuaxishi"),
+        Book(id: 2, title: "鲁滨逊漂流记", type: "epub", path: "/books/lubinxunpiaoliuji", coverPath: "lubinxunpiaoliuji"),
+        Book(id: 3, title: "飘", type: "epub", path: "/books/piao", coverPath: "piao"),
+        Book(id: 4, title: "谁爱这不息的变幻", type: "epub", path: "/books/shuiaizhebuxidebianhuan", coverPath: "shuiaizhebuxidebianhuan"),
+        Book(id: 5, title: "朝花夕拾", type: "epub", path: "/books/zhaohuaxishi", coverPath: "zhaohuaxishi"),
+        Book(id: 6, title: "鲁滨逊漂流记", type: "epub", path: "/books/lubinxunpiaoliuji", coverPath: "lubinxunpiaoliuji"),
+        Book(id: 7, title: "飘", type: "epub", path: "/books/piao", coverPath: "piao"),
+        Book(id: 8, title: "谁爱这不息的变幻", type: "epub", path: "/books/shuiaizhebuxidebianhuan", coverPath: "shuiaizhebuxidebianhuan"),
+        
+    ]
 }
