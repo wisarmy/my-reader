@@ -20,7 +20,7 @@ struct BookshelfView: View {
         NavigationView {
             ScrollView(.vertical) {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
-                    ForEach(books) { book in
+                    ForEach(books, id: \.id) { book in
                         NavigationLink(destination: BookDetailView(book:book)){
                             VStack {
                                 Text(book.title)
@@ -50,10 +50,7 @@ struct BookshelfView: View {
 
                     let hostAddBookWithLinkView = UIHostingController(rootView: self)
                     
-                    guard let server = PublicationServer() else {
-                        /// FIXME: we should recover properly if the publication server can't start, maybe this should only forbid opening a publication?
-                        fatalError("Can't start publication server")
-                    }
+                
                     
                     let httpClient = DefaultHTTPClient()
                     var db: Database
@@ -67,30 +64,19 @@ struct BookshelfView: View {
                     let books = BookRepository(db: db)
               
                     
-                    var library = LibraryService(books: books, publicationServer: server, httpClient: httpClient)
+                    var library = LibraryService(books: books, httpClient: httpClient)
                    
                  
 
                        let url = URL(string: "https://s3.amazonaws.com/moby-dick/moby-dick.epub")!
                        print("url: ",url)
-
-                       library.importPublication(from: url, sender: hostAddBookWithLinkView)
-                           .receive(on: DispatchQueue.main)
-                           .sink { completion in
-                               if case .failure(let error) = completion {
-                                   print(error.localizedDescription)
-                               }
-                               switch completion {
-                               case .finished:
-                                   print("导入完成")
-                               case .failure(let error):
-                                   print("导入失败: ", error.localizedDescription)
-                               }
-                               
-                           } receiveValue: {  progress in
-                               print("导入进度: ", progress)
-                           }
-                           .store(in: &subscriptions)
+                    Task {
+                        do {
+                            try await library.importPublication(from: url, sender: hostAddBookWithLinkView)
+                        } catch {
+                            fatalError("导入图书失败：\(error)")
+                        }
+                    }
                 })
                 
             }
