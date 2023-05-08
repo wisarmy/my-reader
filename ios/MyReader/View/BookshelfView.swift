@@ -6,6 +6,10 @@
 //
 
 import SwiftUI
+import Combine
+import R2Streamer
+import R2Shared
+
 
 struct BookshelfView: View {
     var books: [Book]
@@ -41,9 +45,53 @@ struct BookshelfView: View {
                     .foregroundColor(.blue)
             })
             .alert("添加图书", isPresented: $showingNewBookModal) {
-                AddBookWithLinkView() { link in
-                    print(link)
-                }
+                AddBookWithLinkView(onAdd: {link in
+                    var subscriptions = Set<AnyCancellable>()
+
+                    let hostAddBookWithLinkView = UIHostingController(rootView: self)
+                    
+                    guard let server = PublicationServer() else {
+                        /// FIXME: we should recover properly if the publication server can't start, maybe this should only forbid opening a publication?
+                        fatalError("Can't start publication server")
+                    }
+                    
+                    let httpClient = DefaultHTTPClient()
+                    var db: Database
+                    do {
+                        db = try Database(file: Paths.library.appendingPathComponent("database.db"))
+                    } catch {
+                        // 处理异常
+                        fatalError("无法创建数据库：\(error)")
+                    }
+                    print(Paths.library.absoluteString)
+                    let books = BookRepository(db: db)
+              
+                    
+                    var library = LibraryService(books: books, publicationServer: server, httpClient: httpClient)
+                   
+                 
+
+                       let url = URL(string: "https://s3.amazonaws.com/moby-dick/moby-dick.epub")!
+                       print("url: ",url)
+
+                       library.importPublication(from: url, sender: hostAddBookWithLinkView)
+                           .receive(on: DispatchQueue.main)
+                           .sink { completion in
+                               if case .failure(let error) = completion {
+                                   print(error.localizedDescription)
+                               }
+                               switch completion {
+                               case .finished:
+                                   print("导入完成")
+                               case .failure(let error):
+                                   print("导入失败: ", error.localizedDescription)
+                               }
+                               
+                           } receiveValue: {  progress in
+                               print("导入进度: ", progress)
+                           }
+                           .store(in: &subscriptions)
+                })
                 
             }
             .actionSheet(isPresented: $showingAddBookActionSheet) {

@@ -7,9 +7,11 @@
 
 import SwiftUI
 
+
 struct AddBookWithLinkView: View {
     @State var newBookLink = ""
     var onAdd: (_ link: String) -> Void
+
     var body: some View {
         VStack {
             TextField("图书链接", text: $newBookLink)
@@ -33,10 +35,6 @@ struct AddBookWithLinkView: View {
             }
             .padding()
         }
-//        .padding()
-//        .background(Color.white)
-//        .cornerRadius(16)
-//        .padding()
     }
 }
 

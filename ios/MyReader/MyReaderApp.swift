@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 @main
 struct MyReaderApp: App {
@@ -14,4 +15,8 @@ struct MyReaderApp: App {
             ContentView()
         }
     }
+}
+protocol ModuleDelegate: AnyObject {
+    func presentAlert(_ title: String, message: String, from viewController: UIViewController)
+    func presentError(_ error: Error?, from viewController: UIViewController)
 }
