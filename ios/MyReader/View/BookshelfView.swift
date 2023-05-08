@@ -15,7 +15,7 @@ struct BookshelfView: View {
     var books: [Book]
     @State var showingAddBookActionSheet = false
     @State var showingNewBookModal = false
-
+    
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
@@ -46,12 +46,7 @@ struct BookshelfView: View {
             })
             .alert("添加图书", isPresented: $showingNewBookModal) {
                 AddBookWithLinkView(onAdd: {link in
-                    var subscriptions = Set<AnyCancellable>()
-
                     let hostAddBookWithLinkView = UIHostingController(rootView: self)
-                    
-                
-                    
                     let httpClient = DefaultHTTPClient()
                     var db: Database
                     do {
@@ -61,15 +56,12 @@ struct BookshelfView: View {
                         fatalError("无法创建数据库：\(error)")
                     }
                     print(Paths.library.absoluteString)
-                    let books = BookRepository(db: db)
-              
                     
-                    var library = LibraryService(books: books, httpClient: httpClient)
-                   
-                 
-
-                       let url = URL(string: "https://s3.amazonaws.com/moby-dick/moby-dick.epub")!
-                       print("url: ",url)
+                    let books = BookRepository(db: db)
+                    
+                    let library = LibraryService(books: books, httpClient: httpClient)
+                    let url = URL(string: link)!
+                    print("url: ",url)
                     Task {
                         do {
                             try await library.importPublication(from: url, sender: hostAddBookWithLinkView)
@@ -92,7 +84,7 @@ struct BookshelfView: View {
                 ])
             }
         }
-
+        
     }
 }
 
