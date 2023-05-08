@@ -10,6 +10,8 @@ import SwiftUI
 struct BookshelfView: View {
     var books: [Book]
     @State var showingAddBookActionSheet = false
+    @State var showingNewBookModal = false
+
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
@@ -28,8 +30,8 @@ struct BookshelfView: View {
                     }
                 }
                 
-                
             }
+            // ScrollView ending
             .padding()
             .navigationTitle("书架")
             .navigationBarItems(trailing: Button(action: {
@@ -38,11 +40,19 @@ struct BookshelfView: View {
                 Image(systemName: "plus")
                     .foregroundColor(.blue)
             })
+            .alert("添加图书", isPresented: $showingNewBookModal) {
+                AddBookWithLinkView() { link in
+                    print(link)
+                }
+                
+            }
             .actionSheet(isPresented: $showingAddBookActionSheet) {
                 ActionSheet(title: Text("添加书籍"), message: Text("选择要添加书籍的方式"), buttons: [
                     .default(Text("您的设备")) {
                     },
                     .default(Text("网络链接")) {
+                        showingNewBookModal = true
+                        print("showingNewBookModal", showingNewBookModal)
                     },
                     .cancel()
                 ])

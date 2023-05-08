@@ -22,6 +22,7 @@
 		DE6A02F72A04FA4500F1B747 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6A02F62A04FA4500F1B747 /* Database.swift */; };
 		DE6A02F92A04FE9300F1B747 /* Locator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6A02F82A04FE9300F1B747 /* Locator.swift */; };
 		DE6A02FB2A05067500F1B747 /* BookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6A02FA2A05067500F1B747 /* BookDetailView.swift */; };
+		DE6A02FD2A063EF500F1B747 /* AddBookWithLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6A02FC2A063EF500F1B747 /* AddBookWithLinkView.swift */; };
 		DE7D53B22A04ACCC00AE3C84 /* BookshelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D53B12A04ACCC00AE3C84 /* BookshelfView.swift */; };
 		DE7D53B52A04ADD300AE3C84 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D53B42A04ADD300AE3C84 /* Book.swift */; };
 		DE7D53B82A04AE5200AE3C84 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D53B72A04AE5200AE3C84 /* Paths.swift */; };
@@ -38,6 +39,7 @@
 		DE6A02F62A04FA4500F1B747 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		DE6A02F82A04FE9300F1B747 /* Locator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locator.swift; sourceTree = "<group>"; };
 		DE6A02FA2A05067500F1B747 /* BookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailView.swift; sourceTree = "<group>"; };
+		DE6A02FC2A063EF500F1B747 /* AddBookWithLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookWithLinkView.swift; sourceTree = "<group>"; };
 		DE7D53B12A04ACCC00AE3C84 /* BookshelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookshelfView.swift; sourceTree = "<group>"; };
 		DE7D53B42A04ADD300AE3C84 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		DE7D53B72A04AE5200AE3C84 /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			children = (
 				DE7D53B12A04ACCC00AE3C84 /* BookshelfView.swift */,
 				DE6A02FA2A05067500F1B747 /* BookDetailView.swift */,
+				DE6A02FC2A063EF500F1B747 /* AddBookWithLinkView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE5E427C2A04EF4C00181764 /* Publication.swift in Sources */,
+				DE6A02FD2A063EF500F1B747 /* AddBookWithLinkView.swift in Sources */,
 				DE7D53B52A04ADD300AE3C84 /* Book.swift in Sources */,
 				DE6A02F52A04F30300F1B747 /* Future.swift in Sources */,
 				DE7D53B82A04AE5200AE3C84 /* Paths.swift in Sources */,
@@ -306,7 +310,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -360,7 +364,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
