@@ -95,7 +95,8 @@ struct BookshelfView: View {
      
                     Task {
                         do {
-                            try await library.importPublication(from: url, sender: hostAddBookWithLinkView)
+                            let newBook = try await library.importPublication(from: url, sender: hostAddBookWithLinkView)
+                            self.books.append(newBook)
                         } catch {
                             fatalError("导入图书失败：\(error)")
                         }
