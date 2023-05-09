@@ -12,10 +12,11 @@ import R2Shared
 
 
 struct BookshelfView: View {
-    var books: [Book]
     @State var showingAddBookActionSheet = false
     @State var showingNewBookModal = false
-    
+    @State var books: [Book]
+    @State var subscriptions = Set<AnyCancellable>()
+
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
@@ -34,6 +35,35 @@ struct BookshelfView: View {
                     }
                 }
                 
+            }
+            .onAppear {
+                let httpClient = DefaultHTTPClient()
+                var db: Database
+                do {
+                    db = try Database(file: Paths.library.appendingPathComponent("database.db"))
+                } catch {
+                    // 处理异常
+                    fatalError("无法创建数据库：\(error)")
+                }
+                print(Paths.library.absoluteString)
+                
+                let books = BookRepository(db: db)
+                
+                let library = LibraryService(books: books, httpClient: httpClient)
+                library.allBooks()
+                    .receive(on: DispatchQueue.main)
+                    .sink { completion in
+                        if case .failure(let error) = completion {
+                            fatalError("获取图书列表失败：\(error)")
+
+                        }
+                    } receiveValue: { newBooks in
+                        print("newBooks: ", newBooks)
+                        if !newBooks.isEmpty {
+                            self.books = newBooks
+                        }
+                    }
+                    .store(in: &subscriptions)
             }
             // ScrollView ending
             .padding()
@@ -62,6 +92,7 @@ struct BookshelfView: View {
                     let library = LibraryService(books: books, httpClient: httpClient)
                     let url = URL(string: link)!
                     print("url: ",url)
+     
                     Task {
                         do {
                             try await library.importPublication(from: url, sender: hostAddBookWithLinkView)
