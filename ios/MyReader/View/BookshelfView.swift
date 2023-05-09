@@ -9,7 +9,8 @@ import SwiftUI
 import Combine
 import R2Streamer
 import R2Shared
-
+import UIKit
+import Foundation
 
 struct BookshelfView: View {
     @State var showingAddBookActionSheet = false
@@ -26,9 +27,20 @@ struct BookshelfView: View {
                             VStack {
                                 Text(book.title)
                                     .foregroundColor(.black)
-                                Image(book.coverPath ?? "")
-                                    .resizable()
-                                    .frame(maxWidth: 100, maxHeight: 150)
+                                if
+                                    let coverURL = book.cover,
+                                    let coverData = try? Data(contentsOf: coverURL),
+                                    let cover = UIImage(data: coverData)
+                                {
+                                    Image(uiImage: cover)
+                                        .resizable()
+                                        .frame(maxWidth: 100, maxHeight: 150)
+                                    
+                                } else {
+                                    Image(systemName: "photo")
+                                        .resizable()
+                                        .frame(width: 100, height: 150)
+                                }
                             }
                         }
                         
