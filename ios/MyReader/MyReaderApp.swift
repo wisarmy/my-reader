@@ -7,13 +7,31 @@
 
 import SwiftUI
 import UIKit
+import R2Shared
+
+var db: Database!
+var bookRepository: BookRepository!
+var httpClient: HTTPClient!
+
 
 @main
 struct MyReaderApp: App {
+    @StateObject var library = LibraryService(books: bookRepository, httpClient: httpClient)
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabPageView()
+                .environmentObject(library)
         }
+    }
+    init() {
+        httpClient = DefaultHTTPClient()
+        do {
+            db = try Database(file: Paths.library.appendingPathComponent("database.db"))
+        } catch {
+            // 处理异常
+            fatalError("无法创建数据库：\(error)")
+        }
+        bookRepository = BookRepository(db: db)
     }
 }
 protocol ModuleDelegate: AnyObject {

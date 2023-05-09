@@ -17,6 +17,7 @@ struct BookshelfView: View {
     @State var showingNewBookModal = false
     @State var books: [Book]
     @State var subscriptions = Set<AnyCancellable>()
+    @EnvironmentObject var library: LibraryService
 
     var body: some View {
         NavigationView {
@@ -49,25 +50,11 @@ struct BookshelfView: View {
                 
             }
             .onAppear {
-                let httpClient = DefaultHTTPClient()
-                var db: Database
-                do {
-                    db = try Database(file: Paths.library.appendingPathComponent("database.db"))
-                } catch {
-                    // 处理异常
-                    fatalError("无法创建数据库：\(error)")
-                }
-                print(Paths.library.absoluteString)
-                
-                let books = BookRepository(db: db)
-                
-                let library = LibraryService(books: books, httpClient: httpClient)
                 library.allBooks()
                     .receive(on: DispatchQueue.main)
                     .sink { completion in
                         if case .failure(let error) = completion {
                             fatalError("获取图书列表失败：\(error)")
-
                         }
                     } receiveValue: { newBooks in
                         print("newBooks: ", newBooks)
@@ -89,19 +76,6 @@ struct BookshelfView: View {
             .alert("添加图书", isPresented: $showingNewBookModal) {
                 AddBookWithLinkView(onAdd: {link in
                     let hostAddBookWithLinkView = UIHostingController(rootView: self)
-                    let httpClient = DefaultHTTPClient()
-                    var db: Database
-                    do {
-                        db = try Database(file: Paths.library.appendingPathComponent("database.db"))
-                    } catch {
-                        // 处理异常
-                        fatalError("无法创建数据库：\(error)")
-                    }
-                    print(Paths.library.absoluteString)
-                    
-                    let books = BookRepository(db: db)
-                    
-                    let library = LibraryService(books: books, httpClient: httpClient)
                     let url = URL(string: link)!
                     print("url: ",url)
      
@@ -134,6 +108,7 @@ struct BookshelfView: View {
 
 struct BookshelfView_Previews: PreviewProvider {
     static var previews: some View {
-        BookshelfView(books: Book.sampleData)
+        let library = LibraryService(books: bookRepository, httpClient: httpClient)
+        BookshelfView(books: Book.sampleData).environmentObject(library)
     }
 }

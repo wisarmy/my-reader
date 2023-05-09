@@ -30,7 +30,7 @@
 		DE7D53B52A04ADD300AE3C84 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D53B42A04ADD300AE3C84 /* Book.swift */; };
 		DE7D53B82A04AE5200AE3C84 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D53B72A04AE5200AE3C84 /* Paths.swift */; };
 		DEDAE3162A03B33D0013E657 /* MyReaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDAE3152A03B33D0013E657 /* MyReaderApp.swift */; };
-		DEDAE3182A03B33D0013E657 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDAE3172A03B33D0013E657 /* ContentView.swift */; };
+		DEDAE3182A03B33D0013E657 /* TabPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDAE3172A03B33D0013E657 /* TabPageView.swift */; };
 		DEDAE31A2A03B33E0013E657 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEDAE3192A03B33E0013E657 /* Assets.xcassets */; };
 		DEDAE31D2A03B33E0013E657 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEDAE31C2A03B33E0013E657 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -52,7 +52,7 @@
 		DE7D53B72A04AE5200AE3C84 /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
 		DEDAE3122A03B33D0013E657 /* MyReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEDAE3152A03B33D0013E657 /* MyReaderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReaderApp.swift; sourceTree = "<group>"; };
-		DEDAE3172A03B33D0013E657 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DEDAE3172A03B33D0013E657 /* TabPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPageView.swift; sourceTree = "<group>"; };
 		DEDAE3192A03B33E0013E657 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DEDAE31C2A03B33E0013E657 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,7 +158,7 @@
 				DE7D53B32A04ADB400AE3C84 /* Model */,
 				DE7D53B02A04AC9E00AE3C84 /* View */,
 				DEDAE3152A03B33D0013E657 /* MyReaderApp.swift */,
-				DEDAE3172A03B33D0013E657 /* ContentView.swift */,
+				DEDAE3172A03B33D0013E657 /* TabPageView.swift */,
 				DEDAE3192A03B33E0013E657 /* Assets.xcassets */,
 				DEDAE31B2A03B33E0013E657 /* Preview Content */,
 			);
@@ -267,7 +267,7 @@
 				DE6A02F52A04F30300F1B747 /* Future.swift in Sources */,
 				DE6A03042A089F4700F1B747 /* DRMLibraryService.swift in Sources */,
 				DE7D53B82A04AE5200AE3C84 /* Paths.swift in Sources */,
-				DEDAE3182A03B33D0013E657 /* ContentView.swift in Sources */,
+				DEDAE3182A03B33D0013E657 /* TabPageView.swift in Sources */,
 				DE6A02F32A04F2B300F1B747 /* AnyPublisher.swift in Sources */,
 				DE6A03062A089FC500F1B747 /* HTTPClient.swift in Sources */,
 				DE6A02F92A04FE9300F1B747 /* Locator.swift in Sources */,

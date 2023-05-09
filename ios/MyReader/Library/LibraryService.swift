@@ -21,7 +21,7 @@ protocol LibraryServiceDelegate: AnyObject {
 /// - Import new publications (`Book` in the database).
 /// - Remove existing publications from the bookshelf.
 /// - Open publications for presentation in a navigator.
-final class LibraryService: Loggable {
+final class LibraryService: Loggable, ObservableObject {
     
     weak var delegate: LibraryServiceDelegate?
     

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct TabPageView: View {
     var body: some View {
         TabView {
             ZStack {
@@ -39,8 +39,9 @@ struct ContentView: View {
     
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct TabPageView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let library = LibraryService(books: bookRepository, httpClient: httpClient)
+        TabPageView().environmentObject(library)
     }
 }

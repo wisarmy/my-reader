@@ -20,10 +20,6 @@ struct BookDetailView: View {
 
 struct BookDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        let book = Binding<Book>(
-            get: { Book.sampleData[0] },
-            set: { _ in }
-        )
         BookDetailView(book: Book.sampleData[0])
     }
 }
