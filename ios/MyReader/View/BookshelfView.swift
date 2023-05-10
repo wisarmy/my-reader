@@ -18,6 +18,7 @@ struct BookshelfView: View {
     @State var books: [Book]
     @State var subscriptions = Set<AnyCancellable>()
     @EnvironmentObject var library: LibraryService
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationView {
