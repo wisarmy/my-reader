@@ -58,6 +58,8 @@
 		DEE942BD2A0B417100DD75F6 /* UserPreferencesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE942BC2A0B417100DD75F6 /* UserPreferencesStore.swift */; };
 		DEE942C02A0B41BD00DD75F6 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE942BF2A0B41BD00DD75F6 /* IconButton.swift */; };
 		DEE942C22A0B41DB00DD75F6 /* BarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE942C12A0B41DB00DD75F6 /* BarButtonItem.swift */; };
+		DEE942C52A0B72DC00DD75F6 /* GCDHTTPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE942C42A0B72DC00DD75F6 /* GCDHTTPServer.swift */; };
+		DEE942C72A0B730700DD75F6 /* ResourceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE942C62A0B730700DD75F6 /* ResourceResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +107,8 @@
 		DEE942BC2A0B417100DD75F6 /* UserPreferencesStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPreferencesStore.swift; sourceTree = "<group>"; };
 		DEE942BF2A0B41BD00DD75F6 /* IconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		DEE942C12A0B41DB00DD75F6 /* BarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarButtonItem.swift; sourceTree = "<group>"; };
+		DEE942C42A0B72DC00DD75F6 /* GCDHTTPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDHTTPServer.swift; sourceTree = "<group>"; };
+		DEE942C62A0B730700DD75F6 /* ResourceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +212,7 @@
 		DEDAE3142A03B33D0013E657 /* MyReader */ = {
 			isa = PBXGroup;
 			children = (
+				DEE942C32A0B716F00DD75F6 /* Adapter */,
 				DE6A02FE2A089E9900F1B747 /* Library */,
 				DE7D53B62A04AE3A00AE3C84 /* Common */,
 				DE7D53B32A04ADB400AE3C84 /* Model */,
@@ -337,6 +342,15 @@
 			path = UX;
 			sourceTree = "<group>";
 		};
+		DEE942C32A0B716F00DD75F6 /* Adapter */ = {
+			isa = PBXGroup;
+			children = (
+				DEE942C42A0B72DC00DD75F6 /* GCDHTTPServer.swift */,
+				DEE942C62A0B730700DD75F6 /* ResourceResponse.swift */,
+			);
+			path = Adapter;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -428,6 +442,7 @@
 				DE6A02FD2A063EF500F1B747 /* AddBookWithLinkView.swift in Sources */,
 				DE7D53B52A04ADD300AE3C84 /* Book.swift in Sources */,
 				DE6A03002A089EB600F1B747 /* LibraryService.swift in Sources */,
+				DEE942C52A0B72DC00DD75F6 /* GCDHTTPServer.swift in Sources */,
 				DEE942B52A0B40FD00DD75F6 /* EPUBModule.swift in Sources */,
 				DEE942AB2A0B40FD00DD75F6 /* SearchView.swift in Sources */,
 				DEE942B32A0B40FD00DD75F6 /* ReaderModule.swift in Sources */,
@@ -462,6 +477,7 @@
 				DE6A02F72A04FA4500F1B747 /* Database.swift in Sources */,
 				DEE942AC2A0B40FD00DD75F6 /* SearchViewModel.swift in Sources */,
 				DE6A02FB2A05067500F1B747 /* BookDetailView.swift in Sources */,
+				DEE942C72A0B730700DD75F6 /* ResourceResponse.swift in Sources */,
 				DEDAE3162A03B33D0013E657 /* MyReaderApp.swift in Sources */,
 				DE7D53B22A04ACCC00AE3C84 /* BookshelfView.swift in Sources */,
 			);
