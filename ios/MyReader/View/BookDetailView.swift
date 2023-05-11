@@ -8,48 +8,32 @@
 import SwiftUI
 import UIKit
 
-struct BookDetailView: View {
+struct BookDetailView: UIViewControllerRepresentable {
     var book: Book
-    var reader: ReaderModuleAPI!
-    @EnvironmentObject var library: LibraryService
-    @Environment(\.presentationMode) var presentationMode
+    var library = LibraryService(books: bookRepository, httpClient: httpClient)
+    var reader: ReaderModule = ReaderModule(delegate: readerDelegate, books: bookRepository, bookmarks: bookmarkRepository, highlights: highlightRepository)
+    typealias UIViewControllerType = UINavigationController
 
-    var body: some View {
-        VStack {
-            Text(book.title).foregroundColor(.red)
-            Image(book.coverPath ?? "")
-                .resizable()
-        }.onAppear {
-            _ = UIHostingController(rootView: self)
-
-            Task {
-//                let pub = try await library.openBook(book, sender: bookDetailView)
-//                reader.presentPublication(publication: pub, book: book, in: presentationMode.wrappedValue)
+    func makeUIViewController(context: Context) -> UINavigationController {
+        let navigationController = UINavigationController()
+        navigationController.isNavigationBarHidden = true
+        Task {
+            let pub = try await library.openBook(book, sender: navigationController)
+            reader.presentPublication(publication: pub, book: book, in: navigationController)
+            if let readerView = navigationController.viewControllers.first?.view {
+                readerView.frame = navigationController.view.bounds
+                readerView.layoutIfNeeded()
             }
         }
+        return navigationController
     }
 
+    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
+    }
 }
 
-//struct BookDetailView: UIViewControllerRepresentable {
-//    var book: Book
-//
-//    typealias UIViewControllerType = UINavigationController
-//
-//    func makeUIViewController(context: Context) -> UINavigationController {
-//        let viewController = UIViewController()
-//        viewController.view.backgroundColor = .red
-//        let navigationController = UINavigationController(rootViewController: viewController)
-//        return navigationController
-//    }
-//
-//    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
-//        // Do nothing
-//    }
-//}
-
-//struct BookDetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BookDetailView(book: Book.sampleData[0])
-//    }
-//}
+struct BookDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookDetailView(book: Book.sampleData[0])
+    }
+}

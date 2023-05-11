@@ -149,9 +149,9 @@ class ReaderViewController<N: UIViewController & Navigator>: UIViewController, U
         buttons.append(UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(presentUserPreferences)))
 
         // DRM management
-//        if publication.isProtected {
-//            buttons.append(UIBarButtonItem(image: #imageLiteral(resourceName: "drm"), style: .plain, target: self, action: #selector(presentDRMManagement)))
-//        }
+        if publication.isProtected {
+            buttons.append(UIBarButtonItem(image: #imageLiteral(resourceName: "drm"), style: .plain, target: self, action: #selector(presentDRMManagement)))
+        }
         // Bookmarks
         buttons.append(UIBarButtonItem(image: #imageLiteral(resourceName: "bookmark"), style: .plain, target: self, action: #selector(bookmarkCurrentPosition)))
         // Search
@@ -332,12 +332,12 @@ class ReaderViewController<N: UIViewController & Navigator>: UIViewController, U
     
     // MARK: - DRM
     
-//    @objc func presentDRMManagement() {
-//        guard publication.isProtected else {
-//            return
-//        }
-//        moduleDelegate?.presentDRM(for: publication, from: self)
-//    }
+    @objc func presentDRMManagement() {
+        guard publication.isProtected else {
+            return
+        }
+        moduleDelegate?.presentDRM(for: publication, from: self)
+    }
     
 
     // MARK: - Accessibility

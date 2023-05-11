@@ -28,7 +28,7 @@ protocol ReaderFormatModuleDelegate: AnyObject {
     func presentOutline(of publication: Publication, bookId: Book.Id, from viewController: UIViewController) -> AnyPublisher<Locator, Never>
     
     /// Shows the DRM management screen for the given DRM.
-//    func presentDRM(for publication: Publication, from viewController: UIViewController)
+    func presentDRM(for publication: Publication, from viewController: UIViewController)
     
     func presentAlert(_ title: String, message: String, from viewController: UIViewController)
     func presentError(_ error: Error?, from viewController: UIViewController)

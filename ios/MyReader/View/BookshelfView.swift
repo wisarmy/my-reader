@@ -18,14 +18,14 @@ struct BookshelfView: View {
     @State var books: [Book]
     @State var subscriptions = Set<AnyCancellable>()
     @EnvironmentObject var library: LibraryService
-    @Environment(\.presentationMode) var presentationMode
-
+    
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
                     ForEach(books, id: \.id) { book in
-                        NavigationLink(destination: BookDetailView(book:book)){
+                        NavigationLink(destination: BookDetailView(book: book)
+                        ){
                             VStack {
                                 Text(book.title)
                                     .foregroundColor(.black)
@@ -103,6 +103,10 @@ struct BookshelfView: View {
                 ])
             }
         }
+        .navigationBarHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+
+        
         
     }
 }
@@ -113,3 +117,4 @@ struct BookshelfView_Previews: PreviewProvider {
         BookshelfView(books: Book.sampleData).environmentObject(library)
     }
 }
+

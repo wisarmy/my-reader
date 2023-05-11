@@ -26,7 +26,7 @@ protocol ReaderModuleDelegate: ModuleDelegate {
 }
 
 
-final class ReaderModule: ReaderModuleAPI {
+final class ReaderModule: ReaderModuleAPI, ObservableObject {
     
     weak var delegate: ReaderModuleDelegate?
     private let books: BookRepository
@@ -49,9 +49,9 @@ final class ReaderModule: ReaderModuleAPI {
             EPUBModule(delegate: self),
         ]
         
-        if #available(iOS 11.0, *) {
-            formatModules.append(PDFModule(delegate: self))
-        }
+//        if #available(iOS 11.0, *) {
+//            formatModules.append(PDFModule(delegate: self))
+//        }
     }
     
     func presentPublication(publication: Publication, book: Book, in navigationController: UINavigationController) {
@@ -87,13 +87,13 @@ final class ReaderModule: ReaderModuleAPI {
 
 extension ReaderModule: ReaderFormatModuleDelegate {
 
-//    func presentDRM(for publication: Publication, from viewController: UIViewController) {
-//        let drmViewController: DRMManagementTableViewController = factory.make(publication: publication, delegate: delegate)
-//        let backItem = UIBarButtonItem()
-//        backItem.title = ""
-//        drmViewController.navigationItem.backBarButtonItem = backItem
-//        viewController.navigationController?.pushViewController(drmViewController, animated: true)
-//    }
+    func presentDRM(for publication: Publication, from viewController: UIViewController) {
+        let drmViewController: DRMManagementTableViewController = factory.make(publication: publication, delegate: delegate)
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        drmViewController.navigationItem.backBarButtonItem = backItem
+        viewController.navigationController?.pushViewController(drmViewController, animated: true)
+    }
     
     func presentOutline(of publication: Publication, bookId: Book.Id, from viewController: UIViewController) -> AnyPublisher<Locator, Never> {
         let outlineAdapter = factory.make(publication: publication, bookId: bookId, bookmarks: bookmarks, highlights: highlights)

@@ -30,15 +30,15 @@ extension ReaderFactory: OutlineTableViewControllerFactory {
     }
 }
 
-//extension ReaderFactory: DRMManagementTableViewControllerFactory {
-//    func make(publication: Publication, delegate: ReaderModuleDelegate?) -> DRMManagementTableViewController {
-//        let controller =
-//            storyboards.drm.instantiateViewController(withIdentifier: "DRMManagementTableViewController") as! DRMManagementTableViewController
-//        controller.moduleDelegate = delegate
-//        controller.viewModel = DRMViewModel.make(publication: publication, presentingViewController: controller)
-//        return controller
-//    }
-//}
+extension ReaderFactory: DRMManagementTableViewControllerFactory {
+    func make(publication: Publication, delegate: ReaderModuleDelegate?) -> DRMManagementTableViewController {
+        let controller =
+            storyboards.drm.instantiateViewController(withIdentifier: "DRMManagementTableViewController") as! DRMManagementTableViewController
+        controller.moduleDelegate = delegate
+        controller.viewModel = DRMViewModel.make(publication: publication, presentingViewController: controller)
+        return controller
+    }
+}
 
 /// This is a wrapper for the "OutlineTableView" to encapsulate the  "Cancel" button behaviour
 class OutlineHostingController: UIHostingController<OutlineTableView> {
